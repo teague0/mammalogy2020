@@ -2,8 +2,8 @@
 title: "Running Speeds"
 author: "Teague O'Mara, Southeastern Louisiana University"
 output:
-      html_document:
-        keep_md: true
+      html_document: 
+        keep_md: yes
 ---
 
 
@@ -95,7 +95,7 @@ ggplot(runners, aes(x = log(bodyMass.kg), y = speed.kmh, color = order))+
   
   
 #### Comparing orders
-Let's max some box plots of the orders (x), and both their maximum speed in body lengths per second and absolute speed. We'll store each of these in an object, and then plot the two graphs next to each other. Putting ( ) around the whole statement will also make the plot print so you can see what's happening.  
+Let's make some box plots of the orders (x), and both their maximum speed in body lengths per second and absolute speed. We'll store each of these in an object, and then plot the two graphs next to each other. Putting ( ) around the whole statement will also make the plot print so you can see what's happening.  
 
 </br>
 First the relative speed.
