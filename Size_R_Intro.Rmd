@@ -61,7 +61,7 @@ We'll begin exploring more about mammals using the PanTHERIA Database. This is a
 For this exercise we'll connect directly to a version of the PanTHERIA Data that is stored on Dr. O'Mara's Github and read this into R using `read.csv`.
 
 ```{r message=FALSE}
-library(tidyverse)
+library(tidyverse) #Note -- you only have to do this once per R Session
 mammals <- read.csv("https://github.com/teague0/mammalogy2020/raw/master/data/PanTheriaData.csv")
 ```
 **What's happening here**
