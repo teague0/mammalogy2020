@@ -27,8 +27,7 @@ mammals <- read.csv("https://github.com/teague0/mammalogy2020/raw/master/data/Pa
 
 You will be given a description of the plot that I'm looking for and partial code to complete it. You can use whatever resources you need (copying previous code is a great idea) to finish the code & produce a plot. You'll generally get asked some questions about that plot or to interpret what you see.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r , echo=FALSE}
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
