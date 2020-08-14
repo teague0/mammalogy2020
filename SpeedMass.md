@@ -101,29 +101,25 @@ Let's make some box plots of the orders (x), and both their maximum speed in bod
 First the relative speed.
 
 ```r
-(relativeSpeed <-  ggplot(runners, aes(x = order, y = maxSpeed.bodyLength.s, fill = order))+
+relativeSpeed <-  ggplot(runners, aes(x = order, y = maxSpeed.bodyLength.s, fill = order))+
    geom_boxplot()+
    labs(x = " ", y = " ", title="Relative Speed (body lengths)")+
    theme_bw()+
-   theme(legend.position = "none")
-)
+   theme(legend.position = "none")+
+   theme(axis.text.x = element_text(angle=90, vjust=0.5, size=10))
 ```
-
-![](SpeedMass_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 </br>
 
 Now for the absolute speed.
 
 ```r
-(absoluteSpeed <-  ggplot(runners, aes(x = order, y = speed.kmh, fill = order))+
+absoluteSpeed <-  ggplot(runners, aes(x = order, y = speed.kmh, fill = order))+
    geom_boxplot()+
    labs(x = " ", y = " ", title="Absolute Speed (km/h)")+
    theme_bw()+
-   theme(legend.position = "none")
-)
+   theme(legend.position = "none")+
+   theme(axis.text.x = element_text(angle=90, vjust=0.5, size=10))
 ```
-
-![](SpeedMass_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 </br>
 
 And we can put them together using the package `cowplot`
