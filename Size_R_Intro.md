@@ -49,7 +49,7 @@ For this exercise we'll connect directly to a version of the PanTHERIA Data that
 
 
 ```r
-library(tidyverse)
+library(tidyverse) #Note -- you only have to do this once per R Session
 mammals <- read.csv("https://github.com/teague0/mammalogy2020/raw/master/data/PanTheriaData.csv")
 ```
 **What's happening here**
@@ -181,6 +181,7 @@ ggplot(mammals, aes(x = log10(BasalMetRateMass_g),
 ```
 
 ![](Size_R_Intro_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+  
 First off, you've now learned how to make box plots and scatter plots. That's 80% of good science figures right there. Congrats!  
 
 Second, you can see in this plot that there:
