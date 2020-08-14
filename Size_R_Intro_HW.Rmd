@@ -25,9 +25,153 @@ mammals <- read.csv("https://github.com/teague0/mammalogy2020/raw/master/data/Pa
 
 #### How to complete the homework
 
-You will be given a description of the plot that I'm looking for and partial code to complete it. You can use whatever resources you need (copying previous code is a great idea) to finish the code & produce a plot. You'll generally get asked some questions about that plot or to interpret what you see.
+You will be given a description of the plot that I'm looking for and partial code to complete it. You can use whatever resources you need (copying previous code is a great idea) to finish the code & produce a plot. You'll generally get asked some questions about that plot or to interpret what you see.  
 
-```{r , echo=FALSE}
+##### *1. Adult Body Mass & Age at Sexual Maturity in Years.*  
+Complete a scatterplot of the log10 of adult body masss (x) and age at sexual maturity in years (y). 
+
+```{r}
+
+ggplot(mammals, aes(x = XXXXXXX, y = SexualMaturityAge_d/365))+
+  geom_point()
+```
+  
+Now create the same plot, but color the points by Order and put the legend on the bottom
+```{r}
+ggplot(mammals, aes(x = XXXXXXX, y = SexualMaturityAge_d/365, color = XXXXXXX))+
+  geom_point()+
+  theme(legend.position = "XXXXXXX")
+```
+  
+What do you see in this plot? Are there some Orders that have a later / earlier age at sexual maturity for their body size?  
+  
+  
+  
+  
+#### *2. How / why grow big?*
+  
+Growing big has consequences. We saw before that it means that basal metabolic rates need to increase to keep up with bigger masses. So what other consequences are there? Let's see if bigger animals have bigger home ranges.  
+
+Create a plot of log10 body mass (x) and log10 individual home range (y). Color the points by Order.
+
+
+```{r}
+ggplot(mammals, aes(x = XXXXXXX, y = log10(HomeRange_Indiv_km2), color = XXXXXXX))+
+  geom_point()+
+  theme(legend.position = "XXXXXXX")
+```
+
+*2a. Is there a good relationship between body mass and home range size?*  
+  
+  
+*2b. What Orders have the biggest home ranges? Can you tell from this plot?* 
+
+
+</br>
+Create a box plot of Order (x) and the log10 of home range size. Give the y axis a descriptive label, but leave the x axis label blank.
+```{r}
+ggplot(mammals, aes(x = XXXXXXX, y = XXXXXXX))+
+  geom_boxplot()+
+  labs(x = "",
+       y = "XXXXXXX")+ 
+  theme(axis.text.x = element_text(angle=90, vjust=0.5, size=10)) #flip the X-axis labs around to make them legible
+```
+</br>
+2c. Now, which Orders have the biggest ranges? Which have the biggest median range size? The highest outlier range size? Does this surprise you?  
+
+
+#### *3. Consequences of growing big: Rodents*
+Until now we've looked across Orders to get a little big of an impression of body mass. This can give ideas of what has happened across the diversity of Mammals, but do the relationships we see across the Class Mammalia hold when we get into single clades?  
+  
+  
+We'll use the most species rich clade of Mammals -- the rodents -- to look at a couple of relationships with rodent body size. First, re-create the plot of log10 adult body mass and age at sexual maturity (in years) for just rodents. What is different about this code from what was used before?
+
+```{r}
+mammals %>% dplyr::filter(Order == "Rodentia") %>% 
+ggplot()+
+  geom_point(aes(x = XXXXXXX, y = XXXXXXX))+
+  labs(x = "log10 Adult Mass (g)", y = "Age at Sexual Maturity (years)")+
+  theme_classic()
+```
+</br>
+*3a. Do you see the same relationship in just the Rodentia as we did across all mammals?* Is it as tight and descriptive, or is there more variation? 
+  
+  
+
+When I look at the figure I see a couple of things. First, most rodents have a small body mass and relatively early age at sexual maturity. Second, that relationship is not super predictive. Starting at about 10 g body mass (log10 = 2 = 10 g ), the variation begins to increase a lot. Third, there seem to be 2 major bands of ages at sexual maturity. One around 0.10 years and another at 1 year.  
+
+I think those 2 bands of life history could be interesting, but let's see if that impression is true. For this plot we'll make a histogram of ages at sexual maturity. A histogram is a pretty basic way to see the distribution of data -- it puts our variable of interest on the x axis and counts of that data on the y. A histogram is a quick way to see if there are actually two bumps in the age at sexual maturity.
+
+```{r}
+mammals %>% dplyr::filter(Order == "Rodentia") %>% 
+ggplot()+
+  geom_histogram(aes(x = SexualMaturityAge_d/365))+ #Note that there is no y variable
+  labs(x = "Age at Sexual Maturity (years)")+
+  theme_classic()
+```
+  
+There do seem to be 2 major groups of reproductive ages in here. Most rodents reproduce pretty quickly after they are born, and another group after they are 1 year old. Some don't reproduce until they are 2 or 3!  
+  
+What ecological correlates besides body mass could contribute to this pattern? Diet is often a big factor in things like size and life history. In the PanTHERIA database there isn't a whole lot of detail about what the animals eat, but we do have Tropic Level. Species were defined as (1) herbivore (not vertebrate and/or invertebrate), (2) omnivore (vertebrate and/or invertebrate plus any of the other categories) and (3) carnivore (vertebrate and/or invertebrate only). Complete the code below to create a box plot of trophic category as a factor on the x-axis and age at sexual maturity in years on the y-axis.  
+  
+  
+```{r}
+mammals %>% dplyr::filter(Order == "Rodentia") %>% 
+    dplyr::filter(!is.na(TrophicLevel)) %>% #this is read as 'is not NA (TrophicLevel)'. It takes out the NA category on the x-axis
+  ggplot()+
+  geom_XXXXXXX(aes(x = as.factor(TrophicLevel), y = XXXXXXX))+ 
+  labs(x = "Trophic Level", y = "Age at Sexual Maturity (years)")+
+  theme_classic()
+```
+  
+Trophic level was coded `as.factor` to turn the numbers stored in the column into categories so that the boxplots would plot correctly. We can also change the labels to show herbivore, omnivore, and carnivore like in the example below.
+
+```{r}
+mammals %>% dplyr::filter(Order == "Rodentia") %>% 
+    dplyr::filter(!is.na(TrophicLevel)) %>% #this is read as 'is not NA (TrophicLevel)'. It takes out the NA category on the x-axis
+  ggplot()+
+  geom_boxplot(aes(x = as.factor(TrophicLevel), y = SexualMaturityAge_d/365))+ 
+  labs(x = "Trophic Level", y = "Age at Sexual Maturity (years)")+
+  scale_x_discrete(breaks=c("1", "2", "3"),
+                      labels=c("herbivore", "omnivore", "carnivore"))+
+  theme_classic()
+```
+  
+*3b. What do you see in this plot? *
+  
+  
+
+*3c. Re-make the scatter plot* of log10 body mass and age at sexual maturation in years. Color the points by trophic level.
+
+```{r}
+mammals %>% dplyr::filter(Order == "Rodentia") %>% 
+    dplyr::filter(!is.na(TrophicLevel)) %>% #this is read as 'is not NA (TrophicLevel)'. It takes out the NA category on the x-axis
+  XXXXXXX()+
+  geom_XXXXXXX(aes(x = log10(XXXXXXX), y = XXXXXXX, color = as.factor(XXXXXXX)))+ 
+  labs(x = "log10 Adult Mass (g)", y = "Age at Sexual Maturity (years)")+
+  scale_color_discrete(name="Trophic Level",
+                         breaks=c("1", "2", "3"),
+                         labels=c("herbivore", "omnivore", "carnivore"))+
+  theme_classic()
+```
+
+#### Create a plot -- any plot  
+
+You've made scatter plots, box plots, and histograms. You've changed the color of the points and boxes, changed axis labels, and controlled various ways that the plots look. Now is the time to put it all together on your own.  
+
+*4. Make a Plot* Choose any variables. Give a reason why you chose the variables below, make a plot, and interpret what you see below.  
+
+*- Variables & Why:*  
+
+*- Plot*
+```{r}
 
 ```
+  
+  
+*- Interpretation*  
+
+
+
+
 
