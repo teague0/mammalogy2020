@@ -72,13 +72,13 @@ Diversty in an ecological community can tell you a lot about what kind of commun
 
 In this exercise we'll calculate different diversity metrics to understand how mammal communities can change. We'll use the package `iNEXT` to do this. This program calculates Hill numbers that allow us to compare communities of different sizes. Hill numbers are the *effective number of species* and can be a direct reflection of older diversity metrics, but are a better measure of diversity because the non-linearity of other diversity indices (like the Shannon Diversity Index), makes it difficult to really interpret the values across many studies. Hill numbers are more straight-forward. A nice set of examples and discussion here: https://jonlefcheck.net/2012/10/23/diversity-as-effective-numbers/.  
 
-#### Abundance
-First, we'll calculate simple **Abundance** for each Subproject / Forest Type 
+#### Richness
+First, we'll calculate a very simple **Richness** calcualtion for each Subproject / Forest Type 
 ```{r}
-abundance <- cam %>% group_by(Subproject) %>% 
+rich <- cam %>% group_by(Subproject) %>% 
   filter(!is.na(Species.Name)) %>%  #filter out any NAs in the species name, just in case
-  summarize(SpeciesAbundance = length(unique(Species.Name)))
-abundance
+  summarize(ForestRichness = length(unique(Species.Name)))
+rich
 ```
 We can see that each of the forests has 20 - 30 (ish) species, but we have no idea about the diversity, evenness, or overlap among those species. For all we know those data sets could be made of 97% white-tailed deer and 1 photo sequence each of another 18 - 32 mammal species. We can turn to `iNext` to figure some of this out. FYI, there are supposed to be 80 terrestrial mammal species in all of Florida, including bats & rodents that camera traps most likely wouldn't capture.    
 
@@ -91,7 +91,7 @@ rownames(camDiv) <- camDiv$Common.Name #iNext also wants the species ID as row n
 camDiv <- camDiv[2:6] #Now we can get rid of the species name since it's already in our row name.
 ```
 
-Now that the data are in a format `iNEXT` likes, we can calculate species **Richness**. Because our data are counts, the data type is abundance. Hill numbers are calculated as: $$^{q}D = (\sum_{i=1}^{S}p_{i})^{1/(1-q)}$$
+Now that the data are in a format `iNEXT` likes, we can calculate statistical species **Richness** for comparison across sites. Because our data are counts, the data type is abundance. Hill numbers are calculated as: $$^{q}D = (\sum_{i=1}^{S}p_{i})^{1/(1-q)}$$
 
 Where: *S* is the number of species in the assemblage and each *i* species has the relative abundance $p_{i}$. By changing the exponent *q* we change how sensitive the equation is to relative frequencies and therefore the shape of the distribution and what it represents. *q* = 0 is Richness, *q* = 1 is the Shannon Diversity index, and *q* = 2 is the Simpson's Diversity index. More on those below.
 
